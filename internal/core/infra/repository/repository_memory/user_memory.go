@@ -1,8 +1,8 @@
-package user_repository
+package repository_memory
 
 import (
 	"errors"
-	"product-recommendation/internal/domain/user"
+	"product-recommendation/internal/core/domain/user"
 	"sync"
 )
 

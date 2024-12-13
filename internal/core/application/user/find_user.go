@@ -2,15 +2,15 @@ package user
 
 import (
 	"errors"
-	"product-recommendation/internal/domain/user"
-	user_repository "product-recommendation/internal/infra/repository"
+	"product-recommendation/internal/core/domain/user"
+	memory_repository "product-recommendation/internal/core/infra/repository/repository_memory"
 )
 
 type FindUserUseCase struct {
-	repository user_repository.UserRepository
+	repository memory_repository.UserRepository
 }
 
-func NewFindUserUseCase(repo user_repository.UserRepository) *FindUserUseCase {
+func NewFindUserUseCase(repo memory_repository.UserRepository) *FindUserUseCase {
 	return &FindUserUseCase{
 		repository: repo,
 	}

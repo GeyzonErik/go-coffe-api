@@ -1,17 +1,17 @@
 package user
 
 import (
-	"product-recommendation/internal/domain/user"
-	user_repository "product-recommendation/internal/infra/repository"
+	"product-recommendation/internal/core/domain/user"
+	memory_repository "product-recommendation/internal/core/infra/repository/repository_memory"
 
 	"golang.org/x/crypto/bcrypt"
 )
 
 type RegisterUserUseCase struct {
-	repository user_repository.UserRepository
+	repository memory_repository.UserRepository
 }
 
-func NewRegisterUserUseCase(repo user_repository.UserRepository) *RegisterUserUseCase {
+func NewRegisterUserUseCase(repo memory_repository.UserRepository) *RegisterUserUseCase {
 	return &RegisterUserUseCase{repository: repo}
 }
 

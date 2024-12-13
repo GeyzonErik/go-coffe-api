@@ -1,4 +1,4 @@
-package apikey
+package api_key
 
 type APIKey struct {
 	Key        string

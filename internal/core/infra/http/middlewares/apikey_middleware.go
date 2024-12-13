@@ -2,7 +2,7 @@ package http
 
 import (
 	"net/http"
-	apikey "product-recommendation/internal/domain/api-key"
+	apikey "product-recommendation/internal/core/domain/api_key"
 
 	"github.com/gin-gonic/gin"
 )

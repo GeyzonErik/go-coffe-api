@@ -1,9 +1,9 @@
-package apikey_repository
+package repository_memory
 
 import (
 	"errors"
 	"math/rand"
-	apikey "product-recommendation/internal/domain/api-key"
+	apikey "product-recommendation/internal/core/domain/api_key"
 	"sync"
 
 	"github.com/google/uuid"

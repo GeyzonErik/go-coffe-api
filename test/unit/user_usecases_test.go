@@ -1,9 +1,9 @@
-package user
+package http
 
 import (
 	"errors"
-	usecases "product-recommendation/internal/application/usecases"
-	"product-recommendation/internal/domain/user"
+	usecases "product-recommendation/internal/core/application/user"
+	"product-recommendation/internal/core/domain/user"
 	"testing"
 
 	"github.com/stretchr/testify/assert"

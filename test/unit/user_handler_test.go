@@ -5,9 +5,9 @@ import (
 	"encoding/json"
 	"net/http"
 	"net/http/httptest"
-	useCase "product-recommendation/internal/application/usecases"
-	handler "product-recommendation/internal/infra/http"
-	user_repository "product-recommendation/internal/infra/repository"
+	useCase "product-recommendation/internal/core/application/user"
+	handler "product-recommendation/internal/core/infra/http/handlers"
+	memory_repo "product-recommendation/internal/core/infra/repository/repository_memory"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -17,7 +17,7 @@ import (
 func TestUserHandler_Register(test *testing.T) {
 	gin.SetMode(gin.TestMode)
 
-	repo := user_repository.NewInMemoryUserRepository()
+	repo := memory_repo.NewInMemoryUserRepository()
 	registerUseCase := useCase.NewRegisterUserUseCase(repo)
 	listUseCase := useCase.NewListUsersUseCase(repo)
 	findUserUseCase := useCase.NewFindUserUseCase(repo)
@@ -48,7 +48,7 @@ func TestUserHandler_Register(test *testing.T) {
 func TestUserHandler_List(test *testing.T) {
 	gin.SetMode(gin.TestMode)
 
-	repo := user_repository.NewInMemoryUserRepository()
+	repo := memory_repo.NewInMemoryUserRepository()
 	registerUseCase := useCase.NewRegisterUserUseCase(repo)
 	listUseCase := useCase.NewListUsersUseCase(repo)
 	findUserUseCase := useCase.NewFindUserUseCase(repo)

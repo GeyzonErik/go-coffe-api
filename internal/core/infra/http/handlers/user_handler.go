@@ -2,7 +2,7 @@ package http
 
 import (
 	"net/http"
-	user "product-recommendation/internal/application/usecases"
+	user "product-recommendation/internal/core/application/user"
 
 	"github.com/gin-gonic/gin"
 	"github.com/go-playground/validator/v10"
