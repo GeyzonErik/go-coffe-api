@@ -27,6 +27,13 @@ func (mockRepository *MockRepository) Save(user *user.User) error {
 	return nil
 }
 
+func (mockRepo *MockRepository) FindOne(id string) (*user.User, error) {
+	if user, exists := mockRepo.data[id]; exists {
+		return user, nil
+	}
+	return nil, errors.New("Usuário não encontrado")
+}
+
 func (mockRepo *MockRepository) FindAll() ([]*user.User, error) {
 	result := []*user.User{}
 	for _, user := range mockRepo.data {
