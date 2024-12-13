@@ -13,6 +13,7 @@ var validate = validator.New()
 
 type UserHandler struct {
 	registerUseCase  *user.RegisterUserUseCase
+	findOneUseCase   *user.FindUserUseCase
 	ListUsersUseCase *user.ListUsersUseCase
 }
 
@@ -22,9 +23,18 @@ type createUserRequest struct {
 	Password string `json:"password" validate:"required,min=6"`
 }
 
-func NewUserHandler(registerUseCase *user.RegisterUserUseCase, listUseCase *user.ListUsersUseCase) *UserHandler {
+type findUserRequest struct {
+	Email string `json:"email" validate:"required,email"`
+}
+
+func NewUserHandler(
+	registerUseCase *user.RegisterUserUseCase,
+	listUseCase *user.ListUsersUseCase,
+	findUserUseCase *user.FindUserUseCase,
+) *UserHandler {
 	return &UserHandler{
 		registerUseCase:  registerUseCase,
+		findOneUseCase:   findUserUseCase,
 		ListUsersUseCase: listUseCase,
 	}
 }
@@ -67,6 +77,35 @@ func (handler *UserHandler) List(context *gin.Context) {
 			"name":  user.Name,
 			"email": user.Email,
 		}
+	}
+
+	context.JSON(http.StatusOK, response)
+}
+
+func (handler *UserHandler) Find(context *gin.Context) {
+	var request findUserRequest
+
+	if err := context.ShouldBindJSON(&request); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON"})
+		return
+	}
+
+	if err := validate.Struct(&request); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	userData, err := handler.findOneUseCase.Execute(request.Email)
+
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+		return
+	}
+
+	response := gin.H{
+		"id":    userData.ID,
+		"email": userData.Email,
+		"name":  userData.Name,
 	}
 
 	context.JSON(http.StatusOK, response)

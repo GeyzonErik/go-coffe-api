@@ -20,7 +20,8 @@ func TestUserHandler_Register(test *testing.T) {
 	repo := user_repository.NewInMemoryUserRepository()
 	registerUseCase := useCase.NewRegisterUserUseCase(repo)
 	listUseCase := useCase.NewListUsersUseCase(repo)
-	handler := handler.NewUserHandler(registerUseCase, listUseCase)
+	findUserUseCase := useCase.NewFindUserUseCase(repo)
+	handler := handler.NewUserHandler(registerUseCase, listUseCase, findUserUseCase)
 
 	router := gin.Default()
 	router.POST("/users", handler.Register)
@@ -50,7 +51,8 @@ func TestUserHandler_List(test *testing.T) {
 	repo := user_repository.NewInMemoryUserRepository()
 	registerUseCase := useCase.NewRegisterUserUseCase(repo)
 	listUseCase := useCase.NewListUsersUseCase(repo)
-	handler := handler.NewUserHandler(registerUseCase, listUseCase)
+	findUserUseCase := useCase.NewFindUserUseCase(repo)
+	handler := handler.NewUserHandler(registerUseCase, listUseCase, findUserUseCase)
 
 	router := gin.Default()
 	router.GET("/users", handler.List)

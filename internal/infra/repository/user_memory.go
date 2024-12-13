@@ -1,12 +1,14 @@
 package user_repository
 
 import (
+	"errors"
 	"product-recommendation/internal/domain/user"
 	"sync"
 )
 
 type UserRepository interface {
 	Save(*user.User) error
+	FindOne(email string) (*user.User, error)
 	FindAll() ([]*user.User, error)
 }
 
@@ -39,4 +41,17 @@ func (request *InMemoryUserRepository) FindAll() ([]*user.User, error) {
 	}
 
 	return users, nil
+}
+
+func (request *InMemoryUserRepository) FindOne(email string) (*user.User, error) {
+	request.mu.Lock()
+	defer request.mu.Unlock()
+
+	for _, user := range request.data {
+		if user.Email == email {
+			return user, nil
+		}
+	}
+
+	return nil, errors.New("usuário não encontrado")
 }
